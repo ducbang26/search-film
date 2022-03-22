@@ -4,7 +4,10 @@ import MovieCard from "./MovieCard";
 import SearchIcon from './search.svg';
 import useDebounce from "./useDebounce";
 
-const API_URL = 'http://www.omdbapi.com?apikey=27a9d1b3'
+const BASE_URL = 'https://api.themoviedb.org/3/';
+const API_KEY = 'api_key=4f60185c585c69c847c6c83048cb86ab';
+const API_URL = BASE_URL + 'discover/movie?api_key=4f60185c585c69c847c6c83048cb86ab&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate';
+const API_SEARCH = "https://api.themoviedb.org/3/search/movie?"
 
 const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -12,10 +15,18 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
-  const searchMovie = async (title) => {
-    const response = await fetch(`${API_URL}&s=${title}`);
+  const getMovie = async (url) => {
+    const response = await fetch(url);
     const data = await response.json();
-    setMovies(data.Search);
+    console.log(data);
+    setMovies(data.results);
+  }
+
+  const searchMovie = async (title) => {
+    const response = await fetch(`${API_SEARCH + API_KEY}&query=${title}`);
+    const data = await response.json();
+    console.log(data);
+    setMovies(data.results);
   }
 
   useEffect(
@@ -30,7 +41,7 @@ const App = () => {
         setLoading(false);
 
       } else {
-        searchMovie('')
+        getMovie(API_URL);
       }
     },
     // This is the useEffect input array
@@ -46,9 +57,6 @@ const App = () => {
   //   }
   // }, [searchTerm]);
   
-  useEffect(()=>{
-    searchMovie('')
-  }, []);
  
   const handleSearchTermChange = (e) => {
     setSearchTerm(e.target.value)
