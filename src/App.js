@@ -51,11 +51,9 @@ const App = () => {
     [debouncedSearchTerm]
   );
 
-  // useEffect(()=>{
-  //   if(searchTerm.trim()) {
-  //     searchMovie(searchTerm);
-  //   }
-  // }, [searchTerm]);
+  useEffect(()=>{
+    getMovie(API_URL);
+  }, []);
   
  
   const handleSearchTermChange = (e) => {
