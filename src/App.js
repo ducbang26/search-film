@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import './App.css';
-import MovieCard from "./MovieCard";
+import Loading from "./components/Loading/Loading";
+import MovieCard from "./components/MovieCard/MovieCard";
 import SearchIcon from './search.svg';
 import useDebounce from "./useDebounce";
 
@@ -41,7 +42,9 @@ const App = () => {
         setLoading(false);
 
       } else {
+        setLoading(true);
         getMovie(API_URL);
+        setLoading(false);
       }
     },
     // This is the useEffect input array
@@ -50,11 +53,6 @@ const App = () => {
     // value (searchTerm) hasn't changed for more than 500ms.
     [debouncedSearchTerm]
   );
-
-  useEffect(()=>{
-    getMovie(API_URL);
-  }, []);
-  
  
   const handleSearchTermChange = (e) => {
     setSearchTerm(e.target.value)
@@ -73,10 +71,10 @@ const App = () => {
         />
         <img src={SearchIcon} alt="search" onClick={()=>searchMovie(searchTerm)}/>
       </div>
-      {loading ? 'Dang tai' : <>{movies?.length > 0 ? (
+      {loading ? <Loading /> : <>{movies?.length > 0 ? (
         <div className="container">
           {movies.map((movie) => (
-            <MovieCard movie={movie} />
+            <MovieCard key={movie.id} movie={movie} />
           ))}
         </div>
       ) : (
@@ -84,7 +82,6 @@ const App = () => {
           <h2>No movies found</h2>
         </div>
       )}</>}
-      
     </div>
   );
 }

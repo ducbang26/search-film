@@ -2,7 +2,7 @@ import React from 'react';
 
 const MovieCard = ({ movie: { release_date, poster_path, title, Type } }) => {
   return (
-    <div className="movie" >
+    <div className="movie">
       <div>
         <p>{release_date}</p>
       </div>
