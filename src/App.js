@@ -3,7 +3,7 @@ import './App.css';
 import Loading from "./components/Loading/Loading";
 import MovieCard from "./components/MovieCard/MovieCard";
 import SearchIcon from './search.svg';
-import useDebounce from "./useDebounce";
+import useDebounce from "./hook/useDebounce";
 
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const API_KEY = 'api_key=4f60185c585c69c847c6c83048cb86ab';
