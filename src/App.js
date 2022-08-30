@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import './App.css';
+import './App.scss';
 import Loading from "./components/Loading/Loading";
 import MovieCard from "./components/MovieCard/MovieCard";
-import SearchIcon from './search.svg';
+import SearchIcon from './assets/search.svg';
 import useDebounce from "./hook/useDebounce";
 
 const BASE_URL = 'https://api.themoviedb.org/3/';
@@ -32,11 +32,8 @@ const App = () => {
 
   useEffect(
     () => {
-      // Make sure we have a value (user has entered something in input)
       if (debouncedSearchTerm) {
-        // Set isSearching state
         setLoading(true);
-        // Fire off our API call
         searchMovie(debouncedSearchTerm);
 
         setLoading(false);
@@ -47,10 +44,6 @@ const App = () => {
         setLoading(false);
       }
     },
-    // This is the useEffect input array
-    // Our useEffect function will only execute if this value changes ...
-    // ... and thanks to our hook it will only change if the original ...
-    // value (searchTerm) hasn't changed for more than 500ms.
     [debouncedSearchTerm]
   );
  
@@ -63,11 +56,11 @@ const App = () => {
       <h1>Movie App</h1>
 
       <div className="search">
-        <input         
+        <input
           type="text"
           placeholder="Search Movies"
           value={searchTerm}
-          onChange={handleSearchTermChange}          
+          onChange={handleSearchTermChange}
         />
         <img src={SearchIcon} alt="search" onClick={()=>searchMovie(searchTerm)}/>
       </div>
